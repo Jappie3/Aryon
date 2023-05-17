@@ -1,0 +1,82 @@
+body {
+    display: grid;
+    grid-template-columns: 200px 1fr;
+    grid-template-rows: 50px 1fr;
+    grid-template-areas:
+      "header header"
+      "sidebar content";
+    height: 100vh;
+    margin: 0;
+    padding: 0;
+}
+header {
+    grid-area: header;
+    background-color: #333;
+    color: #fff;
+    font-size: 24px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+#sidebar {
+    grid-area: sidebar;
+    background-color: #f0f0f0;
+    padding: 15px;
+}
+#sidebar ul {
+    list-style-type: none;
+    margin: 0;
+    padding: 0;
+}
+/*#sidebar li {
+    margin-bottom: 10px;
+    margin-left: 0px;
+}*/
+#sidebar a {
+    display: block;
+    /*padding: 5px 10px;*/
+    text-decoration: none;
+    color: #333;
+    padding-left: 5px; /* small whitespace before text */
+}
+#sidebar a:hover {
+    background-color: #ddd;
+}
+#sidebar h3 {
+    padding-left: 0vw;
+    margin: 0;
+    margin-bottom: 2vh;
+    padding-left: 5px; /* small whitespace before text */
+}
+
+.feed_single {
+    margin-left: 0px;
+}
+.feed_group {
+    margin-left: 20px;
+    padding-bottom: 5px;
+}
+
+#content {
+    grid-area: content;
+    padding: 20px;
+}
+#content h1 {
+    margin-top: 0;
+}
+#content ul {
+    list-style-type: none;
+    margin: 0;
+    padding: 0;
+}
+#content li {
+    margin-bottom: 10px;
+}
+#content a {
+    text-decoration: none;
+    color: #007bff;
+}
+#content a:hover {
+    text-decoration: underline;
+}

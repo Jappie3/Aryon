@@ -6,51 +6,20 @@
   </head>
   <body>
     <header>RSS Reader</header>
-    <div id="sidebar">
+    <div class="sidebar">
       <h2>Feeds</h2>
-      <ul>
-        {% for feed in feeds %}
-          {% if not feed.feeds %} <!-- check if feed item has a .feeds attribute (-> single feed) -->
-            <li class="feed_single feed"><a href="#" onclick="fetchArticles('{{ feed.url }}')">{{ feed.title }}</a></li>
-          {% else %} <!-- else -> feedgroup -->
-            <h3>{{ feed.title }}</h3>
-              <ul>
-                {% for subfeed in feed.feeds %}
-                  <li class="feed_group feed"><a href="#" onclick="fetchArticles('{{ subfeed.url }}')">{{ subfeed.title }}</a></li>
-                {% endfor %}
-              </ul>
-          {% endif %}
-        {% endfor %}
-      </ul>
+      {% include 'sidebar.html' %}
     </div>
-    <div id="articles-container">
-    </div>
-    <script>
-      function fetchArticles(feedUrl) {
-        const xhr = new XMLHttpRequest();
-        xhr.onreadystatechange = function() {
-          if (this.readyState === 4 && this.status === 200) {
-            const articles = JSON.parse(this.responseText);
-            const articlesContainer = document.getElementById('articles-container');
-            articlesContainer.innerHTML = '';
-            articles.forEach(function(article) {
-              const articleDiv = document.createElement('div');
-              const title = document.createElement('h3');
-              const link = document.createElement('a');
-              link.href = article.link;
-              link.textContent = article.title;
-              title.appendChild(link);
-              const summary = document.createElement('p');
-              summary.textContent = article.summary;
-              articleDiv.appendChild(title);
-              articleDiv.appendChild(summary);
-              articlesContainer.appendChild(articleDiv);
-            });
-          }
-        };
-        xhr.open('GET', '/api/feed?url=' + encodeURIComponent(feedUrl), true);
-        xhr.send();
-      }
-    </script>
+    {% if articles %}
+      <div class="articles">
+        <h2>Articles</h2>
+        {% include 'articles.html' %}
+      </div>
+    {% else %}
+      <div class="articles">
+        <h2>Articles</h2>
+        <p>No articles to display.</p>
+      </div>
+    {% endif %}
   </body>
 </html>

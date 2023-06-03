@@ -1,0 +1,13 @@
+{% for feed in feeds %}
+    <li class="nav-item">
+        <a class="nav-link" href="{{ url_for('feed', feed_id=feed.id) }}">
+            <i class="fas fa-fw fa-rss"></i>
+            <span>{{ feed.title }}</span>
+        </a>
+    </li>
+{% endfor %}
+ <form action="{{ url_for('add_feed') }}" method="post">
+     <input type="text" name="title" placeholder="Enter feed title">
+     <input type="text" name="url" placeholder="Enter RSS feed URL">
+     <button type="submit">Add</button>
+ </form>

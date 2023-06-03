@@ -1,0 +1,16 @@
+---
+DATABASE_URL: sqlite:///db.sqlite3
+
+# set to true if you want multi-user support, if true -> USE_OIDC needs to be true as well, and you will need an identity provider
+IS_MULTIUSER: false
+
+# use OpenIDConnect for authentication and authorization, needs to be true when running in multi-user mode
+# can be set to true for single-user mode as well
+OIDC_ENABLED: false
+#OIDC_WELL_KNOWN_URL: "https://your.identity.provider/.well-known/openid-configuration"
+#OIDC_CLIENT_ID: "your_client_id"
+#OIDC_CLIENT_SECRET: "your_client_secret"
+#OIDC_SCOPE: openid profile email # <- I suggest you don't change this, especially do not remove openid
+
+# debug - careful
+DEBUG_DROP_DATABASE_ON_RESTART: false

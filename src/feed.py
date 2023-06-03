@@ -1,13 +1,11 @@
 import requests
 import feedparser
-from feedindex import FeedIndex
 
 
 class Feed:
     def __init__(self, url, title):
         self.url = url
         self.title = title
-        FeedIndex.add_feed(self)
 
     def update(self):
         feed = feedparser.parse(self.url)

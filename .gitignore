@@ -1,6 +1,8 @@
 .idea
 .venv
 .env
+config.yaml
 __pycache__
 todo.txt
 rssfeeds.txt
+db.sqlite3

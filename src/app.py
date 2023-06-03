@@ -20,7 +20,7 @@ from util.get_from_db import *
 # feed groups
 # should I keep usernames? (defaults to empty string rn) or just use the sub from the token & the id from the db
 # refresh the feeds: automatically or only on-demand?
-# conversion between single- and multi-user mode (basically just give the single user an OIDC sub)
+# database conversion between single- and multi-user mode (basically just give the single user an OIDC sub)
 
 
 app = Flask(__name__, static_folder="templates/static")
@@ -192,7 +192,7 @@ def add_feed():
             print(e)
             dbsession.rollback()
             raise
-        print(f"Added feed {new_feed.title} to database")
+        print(f"Added feed {new_feed.title} ({new_feed.url}) to database")
         # todo should this functionality go elsewhere?
         # add articles for the new feed to the database
         feed_articles = feedparser.parse(feed_url).entries

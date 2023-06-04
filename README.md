@@ -23,6 +23,11 @@ pip install -r requirements.txt
 
 - There is also a Docker compose file in case you want to containerize this application
     - Make sure to copy `config.yaml.sample` to `config.yaml` (and change it according to your use case) before running `docker compose up -d`
+    - Note about ownership of the files: every time the container runs, the ownership of the `/app` directory (to which the `/src` directory on the host is mapped) will get changed to `2002:2002`
+        - If you want to modify the config either:
+            - Edit the file as root
+            - Change the ownership so that your user can edit it (requires `sudo`, `doas`, etc.). When (re)starting the container, the **ownership will get set to `2002:2002` again**.
+        - Why is this? I don't run the application as root, but as a user with UID 2002. If the ownership is not set correctly, the program will not be able to access the config file.
 - Here are some RSS feeds you can test with (I am not affiliated with these feeds nor with the contents of them):
     - https://theorangeone.net/posts/feed/
     - https://www.vrt.be/vrtnws/en.rss.articles.xml

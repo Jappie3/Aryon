@@ -37,7 +37,7 @@ class RssFeed(Model):
     )
     title: Mapped[str] = mapped_column(String, nullable=False)
     # note = Column(String) # todo maybe add the ability to add notes to a feed?
-    url: Mapped[str] = mapped_column(String, nullable=False, unique=True)
+    url: Mapped[str] = mapped_column(String, nullable=False)
 
     feed_articles: Mapped[list['FeedArticle']] = relationship(
         cascade="all, delete-orphan", back_populates='feed'

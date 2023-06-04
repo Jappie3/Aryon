@@ -163,7 +163,8 @@ def index():
                 dbsession.commit()
             # else:
             # print("user exists")
-    return render_template("index.html", feeds=get_feeds())
+    # only show feeds of the current user
+    return render_template("index.html", feeds=get_feeds(request.user_data["sub"]))
 
 
 @app.route("/feed/<feed_id>")

@@ -245,7 +245,8 @@ def check_config():
 
 def main():
     check_config()
-    app.run(debug=True)
+    # app.run(debug=True)
+    app.run()
 
 
 if __name__ == "__main__":

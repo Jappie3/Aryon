@@ -2,13 +2,13 @@ from db.models import RssFeed, FeedArticle, User
 from util.db_session import db_session
 
 
-def get_feeds(user_id=0):
+def get_feeds(user_sub):
     """
     Get all feeds from the database for a given user
-    :param user_id: ID of the user to get feeds for, defaults to 0
+    :param user_sub: ID of the user to get feeds for, defaults to 0
     """
     with db_session() as dbsession:
-        return dbsession.query(RssFeed).filter(RssFeed.user_id == user_id).all()
+        return dbsession.query(RssFeed).filter(RssFeed.user_sub == user_sub).all()
 
 
 def get_articles(feed_id):

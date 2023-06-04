@@ -11,11 +11,9 @@ class User(Model):
     User model, represents a user
     """
     __tablename__ = "users"
-    id: Mapped[int] = mapped_column(primary_key=True)
-    name: Mapped[str] = mapped_column(String, nullable=False)
     # unique subject identifier from the OpenID Connect provider
-    # todo consider making this the primary key (make sure to check if it's unique (should be))
-    oidc_sub: Mapped[str] = mapped_column(String, unique=True)
+    oidc_sub: Mapped[str] = mapped_column(String, nullable=False, primary_key=True)
+    name: Mapped[str] = mapped_column(String, nullable=False)
 
     feeds: Mapped[list['RssFeed']] = relationship(
         cascade="all, delete-orphan", back_populates='user'
@@ -33,9 +31,9 @@ class RssFeed(Model):
     __tablename__ = 'rss_feeds'
 
     id: Mapped[int] = mapped_column(primary_key=True)
-    user_id: Mapped[int] = mapped_column(
+    user_sub: Mapped[int] = mapped_column(
         Integer,
-        ForeignKey('users.id')
+        ForeignKey('users.oidc_sub')
     )
     title: Mapped[str] = mapped_column(String, nullable=False)
     # note = Column(String) # todo maybe add the ability to add notes to a feed?
@@ -49,10 +47,10 @@ class RssFeed(Model):
         back_populates='feeds'
     )
 
-    def __init__(self, title, url, user_id=0):  # default to userid 0 -> does not exist (starts an 1)
+    def __init__(self, title, url, user_sub):
         self.title = title
         self.url = url
-        self.user_id = user_id
+        self.user_sub = user_sub
 
 
 class FeedArticle(Model):

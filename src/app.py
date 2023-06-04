@@ -18,7 +18,6 @@ from util.get_from_db import *
 # logout route & button
 # unread indicator
 # feed groups
-# should I keep usernames? (defaults to empty string rn) or just use the sub from the token & the id from the db
 # refresh the feeds: automatically or only on-demand?
 # database conversion between single- and multi-user mode (basically just give the single user an OIDC sub)
 
@@ -129,7 +128,7 @@ def get_user_token():
 
 
 @app.route("/user/id")
-def get_user_id():
+def get_user_sub():
     if not config["OIDC_ENABLED"]:
         return "single_user"
     return request.user_data["sub"]
@@ -174,7 +173,7 @@ def feed(feed_id):
     :param feed_id: ID of the feed to render
     :return: rendered template
     """
-    return render_template("index.html", feeds=get_feeds(), articles=get_articles(feed_id))
+    return render_template("index.html", feeds=get_feeds(request.user_data["sub"]), articles=get_articles(feed_id))
 
 
 @app.route("/add_feed", methods=['POST'])
@@ -184,7 +183,7 @@ def add_feed():
     """
     feed_url = unquote(request.form['url'])
     feed_title = unquote(request.form['title'])
-    new_feed = RssFeed(title=feed_title, url=feed_url)
+    new_feed = RssFeed(title=feed_title, url=feed_url, user_sub=request.user_data["sub"])
     with db_session() as dbsession:
         try:
             dbsession.add(new_feed)
@@ -211,11 +210,11 @@ def add_feed():
             dbsession.rollback()
             raise
         print(f"Added {len(articles)} articles to database")
-    return render_template("index.html", feeds=get_feeds())
+    return render_template("index.html", feeds=get_feeds(user_sub=request.user_data["sub"]))
 
 
-def refresh_feeds(user_id=0):
-    # default user_id to 0, meaning refresh all feeds
+def refresh_feeds(user_sub=0):
+    # default user_sub to 0, meaning refresh all feeds
     # todo refresh feeds
     pass
 
